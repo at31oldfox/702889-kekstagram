@@ -31,6 +31,14 @@ module.exports = {
         from: './src/photos',
         to: './photos',
       },
+      {
+        from: './src/img',
+        to: './img',
+      },
+      {
+        from: './src/favicons',
+        to: './favicons',
+      },
     ]),
   ],
   module: {
