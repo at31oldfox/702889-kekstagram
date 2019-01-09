@@ -42,6 +42,15 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 function getRandomNum(max, min) {
   return Math.round(Math.random() * (max - min) + min);
 }
+
+
+/**
+ * немного в ситле es6, стрелочная функция.
+ * @param {max} int 
+ * @param {min} int 
+ */
+// const getRandomNum = (max, min) => Math.round(Math.random() * (max - min) + min);
+
 /* возвращает случайный елемент массива */
 function getRandomElem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -86,14 +95,31 @@ function appendSmallPicture(array) {
   blockPictures.appendChild(fragment);
 }
 
-appendSmallPicture(createArrayObject(Num));
-/* вот тут не знаю правильно ли я их не запихнула в общий обьект */
+/**
+ * создадим картинки и сохраним их в глобальной перменной 
+ * чтобы иметь к ним доступ в любой момент
+ */
+const photos = createArrayObject(Num);
+appendSmallPicture(photos);
+
+/**
+ * комментариев будет больше чем один, поэтому желательно это учесть сразу, 
+ * давайте сделаем функцию которая будет собирать комменты
+ */
+function createComment(){}
+
+/**
+ * и создадим функцию которая генерирует комментарии в рандомном количестве и аттачит их
+ */
+function attachComments(){} 
+
+/* генерируется один аватар */
 const avatar = `img/avatar-${getRandomNum(1, 6)}.svg`;
-/* в консоль иногда выпадает ошибка, что аватар не найден Почему?? 
-не находит 5 и 2 картинку */
+
+/* пофиксил  просто не копировались эти картинки */
 const message = `${getRandomElem(commentsArray)} ${getRandomElem(commentsArray)}`;
 
-/* показывает и заполняет данными полноразмерное фото */
+/*  */
 function createBigPicture(obj) {
   bigPictureImg.src = obj[0].url;
   likesCount.textContent = obj[0].likes;
@@ -108,9 +134,9 @@ function createBigPicture(obj) {
 }
 createBigPicture(createArrayObject(1));
 // Вопросы:
-/* в задании еще было имя автора, ума не приложу куда в разметку его пихать??
-почему линтер ругается, когда поиск по селектору производится по всему документу??
-а как иначе его искать??
-правильно ли я поняла ТЗ ? а то там запутано как то)
+/* про имя, раньше использовали теперь нет, не используем.
+
 что из es6 еще было правильнее использовать? не давать готовое решение, подсказать способ или тему)))
+// можно использовать стрелочные функции см. getRandomNum, можно классы (класс маленькая фотка, класс большая фотка),
+// но про классы не сильно заморачивайтесь.
 */
