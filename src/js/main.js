@@ -13,7 +13,7 @@ const descriptions = [
   'Отдыхаем...что ли',
   'Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......',
   'Вот это тачка!'];
-
+  
 const Num = 25;
 /* блок , в который вставляем маленькое фото */
 const blockPictures = document.querySelector('.pictures');
@@ -39,30 +39,19 @@ const socialCaption = bigPicture.querySelector('.social__caption');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 
 /* возвращает число в диапазоне мин - макс */
-function getRandomNum(max, min) {
-  return Math.round(Math.random() * (max - min) + min);
-}
-
-
-/**
- * немного в ситле es6, стрелочная функция.
- * @param {max} int 
- * @param {min} int 
- */
-// const getRandomNum = (max, min) => Math.round(Math.random() * (max - min) + min);
+ const getRandomNum = (max, min) => Math.round(Math.random() * (max - min) + min);
 
 /* возвращает случайный елемент массива */
-function getRandomElem(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
+ const getRandomElem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
 /* удаляет класс hidden у переданого обьекта */
 function removeClassHidden(obj) {
   obj.classList.remove('hidden');
 }
-
+/* прячет счётчик комментариев и загрузку новых комментариев */
 function hidesClasses() {
-  socialCommentCount.classList.add('visually-hidden'); // прячет счётчик комментариев
-  commentsLoader.classList.add('visually-hidden'); // прячет загрузку новых комментариев
+  socialCommentCount.classList.add('visually-hidden'); 
+  commentsLoader.classList.add('visually-hidden'); 
 }
 /* создает массив обьектов */
 function createArrayObject(number) {
@@ -75,7 +64,6 @@ function createArrayObject(number) {
       description: getRandomElem(descriptions),
     };
   }
-  console.log(pictures);
   return pictures;
 }
 /* создает шаблон миниатюры фото */
@@ -103,40 +91,41 @@ const photos = createArrayObject(Num);
 appendSmallPicture(photos);
 
 /**
- * комментариев будет больше чем один, поэтому желательно это учесть сразу, 
- * давайте сделаем функцию которая будет собирать комменты
+ *  функция  собирает один  коммент
  */
-function createComment(){}
-
-/**
- * и создадим функцию которая генерирует комментарии в рандомном количестве и аттачит их
- */
-function attachComments(){} 
-
-/* генерируется один аватар */
+function createComment(){ 
 const avatar = `img/avatar-${getRandomNum(1, 6)}.svg`;
-
-/* пофиксил  просто не копировались эти картинки */
 const message = `${getRandomElem(commentsArray)} ${getRandomElem(commentsArray)}`;
+const oneComent =  `<li class="social__comment"> 
+<img class="social__picture"
+ src= ${avatar} alt="Аватар комментатора фотографии"
+ width="35" height="35"><p class="social__text">${message}</p></li>`;
+ return oneComent;
+}
+/**
+ * функцию  генерирует комментарии в рандомном количестве и аттачит их
+ */
+function attachComments(number){
+let comments = [];
+for (let i = 0; i < number; i++) {
+let comment = createComment();
+comments.push(comment);
+  }
+  socialComments.innerHTML = comments;
+};
 
-/*  */
+/*  */ 
 function createBigPicture(obj) {
   bigPictureImg.src = obj[0].url;
   likesCount.textContent = obj[0].likes;
   commentsCount.textContent = obj[0].comments;
-  socialComments.innerHTML = `<li class="social__comment"> 
-  <img class="social__picture"
-   src= ${avatar} alt="Аватар комментатора фотографии"
-   width="35" height="35"><p class="social__text">${message}</p></li>`;
+  attachComments(getRandomNum(1, 5));
   socialCaption.innerHTML = obj[0].description;
   removeClassHidden(bigPicture);
   hidesClasses();
 }
 createBigPicture(createArrayObject(1));
-// Вопросы:
-/* про имя, раньше использовали теперь нет, не используем.
-
-что из es6 еще было правильнее использовать? не давать готовое решение, подсказать способ или тему)))
-// можно использовать стрелочные функции см. getRandomNum, можно классы (класс маленькая фотка, класс большая фотка),
-// но про классы не сильно заморачивайтесь.
-*/
+// правильно ли, что в функции createComment() я avatar и message перенесла в функцию?
+// может было правильнее оставить их как переменные глобально?
+//почему стрелочные функции присваиваются в переменную?
+// в функции attachComments хотела через documentFragment, но не получмлось почему то(
