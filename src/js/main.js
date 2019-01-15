@@ -20,3 +20,4 @@ photos.forEach((data) => {
 
 // добавляем оптом
 blockPictures.appendChild(fragment);
+
